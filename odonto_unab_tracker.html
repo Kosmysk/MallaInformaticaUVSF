@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💻 Ingeniería en Informática UV 🚀</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(180deg, #e3f2fd, #f0f4ff);
+      min-height: 100vh;
+      padding: 20px;
+      color: #2d3748;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      animation: fadeInDown 0.6s ease;
+    }
+
+    h1 {
+      color: #1976d2;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      text-shadow: 0 4px 20px rgba(25, 118, 210, 0.2);
+    }
+
+    .subtitle {
+      color: #1976d2;
+      font-size: 1.1rem;
+      font-weight: 400;
+    }
+
+    .stats {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 20px 35px;
+      box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1976d2;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #718096;
+      margin-top: 5px;
+    }
+
+    .controls {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      background: rgba(255, 255, 255, 0.95);
+      color: #1976d2;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(25, 118, 210, 0.15);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(25, 118, 210, 0.25);
+      background: #ffffff;
+    }
+
+    #malla {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .semestre {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 25px;
+      box-shadow: 0 10px 40px rgba(25, 118, 210, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .semestre:hover {
+      transform: translateY(-5px);
+    }
+
+    .semestre h2 {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #1976d2;
+      font-weight: 700;
+      padding-bottom: 15px;
+      border-bottom: 3px solid #90caf9;
+    }
+
+    .ramo {
+      background: #f7fafc;
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+      cursor: not-allowed;
+      transition: all 0.3s ease;
+      border-left: 5px solid #cbd5e0;
+      position: relative;
+      overflow: hidden;
+      line-height: 1.4;
+    }
+
+    .ramo::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 5px;
+      transition: width 0.3s ease;
+    }
+
+    .ramo.bloqueado {
+      opacity: 0.6;
+    }
+
+    .ramo.activo {
+      background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+      border-left-color: #2196f3;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(33, 150, 243, 0.15);
+    }
+
+    .ramo.activo::before {
+      background: #2196f3;
+    }
+
+    .ramo.activo:hover {
+      transform: translateX(5px);
+      box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+    }
+
+    .ramo.aprobado {
+      background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+      border-left-color: #4caf50;
+      cursor: pointer;
+      box-shadow: 0 2px 12px rgba(76, 175, 80, 0.3);
+      font-weight: 600;
+    }
+
+    .ramo.aprobado::before {
+      background: #4caf50;
+    }
+
+    .ramo.aprobado:hover {
+      transform: translateX(5px);
+      box-shadow: 0 4px 20px rgba(76, 175, 80, 0.45);
+    }
+
+    .icon {
+      display: inline-block;
+      margin-right: 8px;
+      font-size: 1.1rem;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .subtitle {
+        font-size: 0.95rem;
+      }
+
+      #malla {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-card {
+        padding: 15px 25px;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+      }
+    }
+
+    .progress-bar-container {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 25px;
+      margin: 20px auto;
+      max-width: 600px;
+      box-shadow: 0 8px 32px rgba(25, 118, 210, 0.1);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 30px;
+      background: #e2e8f0;
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #1976d2 0%, #42a5f5 100%);
+      transition: width 0.5s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>💻 Ingeniería en Informática UV 🚀</h1>
+    <p class="subtitle">Campus San Felipe - Admisión 2025</p>
+  </header>
+
+  <div class="progress-bar-container">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar">0%</div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-number" id="aprobadas">0</div>
+      <div class="stat-label">Aprobadas</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="disponibles">0</div>
+      <div class="stat-label">Disponibles</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="bloqueadas">0</div>
+      <div class="stat-label">Bloqueadas</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="btn" onclick="resetearTodo()">🔄 Reiniciar Todo</button>
+  </div>
+
+  <div id="malla"></div>
+</div>
+
+<script>
+const ramos = [
+  // SEMESTRE 1
+  { nombre: "Fundamentos de Matemáticas", semestre: "Semestre 1", prereq: [] },
+  { nombre: "Desarrollo Personal", semestre: "Semestre 1", prereq: [] },
+  { nombre: "Desafíos de Ingeniería, Tecnología y Sociedad", semestre: "Semestre 1", prereq: [] },
+  { nombre: "Principios de Computación y Programación", semestre: "Semestre 1", prereq: [] },
+  { nombre: "Fundamentos de Física", semestre: "Semestre 1", prereq: [] },
+
+  // SEMESTRE 2
+  { nombre: "Cálculo Diferencial e Integral", semestre: "Semestre 2", prereq: ["Fundamentos de Matemáticas"] },
+  { nombre: "Tecnologías Emergentes", semestre: "Semestre 2", prereq: [] },
+  { nombre: "Ingeniería, Innovación y Emprendimiento", semestre: "Semestre 2", prereq: ["Desafíos de Ingeniería, Tecnología y Sociedad"] },
+  { nombre: "Programación", semestre: "Semestre 2", prereq: ["Principios de Computación y Programación"] },
+  { nombre: "Física I", semestre: "Semestre 2", prereq: ["Fundamentos de Física"] },
+  { nombre: "Idioma I", semestre: "Semestre 2", prereq: [] },
+
+  // SEMESTRE 3
+  { nombre: "Series y Cálculo en Varias Variables", semestre: "Semestre 3", prereq: ["Cálculo Diferencial e Integral"] },
+  { nombre: "Física II", semestre: "Semestre 3", prereq: ["Física I"] },
+  { nombre: "Programación Avanzada", semestre: "Semestre 3", prereq: ["Programación"] },
+  { nombre: "Hardware Digital", semestre: "Semestre 3", prereq: ["Principios de Computación y Programación"] },
+  { nombre: "Ética Profesional", semestre: "Semestre 3", prereq: [] },
+  { nombre: "Idioma II", semestre: "Semestre 3", prereq: ["Idioma I"] },
+
+  // SEMESTRE 4
+  { nombre: "Redes de Computadores", semestre: "Semestre 4", prereq: ["Hardware Digital"] },
+  { nombre: "Matemáticas Discretas", semestre: "Semestre 4", prereq: ["Series y Cálculo en Varias Variables"] },
+  { nombre: "Taller de Programación Avanzada", semestre: "Semestre 4", prereq: ["Programación Avanzada"] },
+  { nombre: "Fundamentos de Ingeniería de Software", semestre: "Semestre 4", prereq: ["Programación Avanzada"] },
+  { nombre: "Idioma III", semestre: "Semestre 4", prereq: ["Idioma II"] },
+
+  // SEMESTRE 5
+  { nombre: "Estructura de Datos", semestre: "Semestre 5", prereq: ["Taller de Programación Avanzada", "Matemáticas Discretas"] },
+  { nombre: "Arquitectura de Computadores", semestre: "Semestre 5", prereq: ["Hardware Digital"] },
+  { nombre: "Modelos de Base de Datos", semestre: "Semestre 5", prereq: ["Fundamentos de Ingeniería de Software"] },
+  { nombre: "Ingeniería de Requisitos", semestre: "Semestre 5", prereq: ["Fundamentos de Ingeniería de Software"] },
+  { nombre: "Laboratorio de Redes de Computadores", semestre: "Semestre 5", prereq: ["Redes de Computadores"] },
+  { nombre: "Idioma IV", semestre: "Semestre 5", prereq: ["Idioma III"] },
+
+  // SEMESTRE 6
+  { nombre: "Análisis y Diseño de Algoritmos", semestre: "Semestre 6", prereq: ["Estructura de Datos"] },
+  { nombre: "Sistemas Operativos", semestre: "Semestre 6", prereq: ["Arquitectura de Computadores"] },
+  { nombre: "Aplicaciones Web", semestre: "Semestre 6", prereq: ["Modelos de Base de Datos"] },
+  { nombre: "Arquitectura de Software", semestre: "Semestre 6", prereq: ["Ingeniería de Requisitos"] },
+  { nombre: "Experiencia del Usuario", semestre: "Semestre 6", prereq: ["Ingeniería de Requisitos"] },
+  { nombre: "Idioma V", semestre: "Semestre 6", prereq: ["Idioma IV"] },
+  { nombre: "Contabilidad y Finanzas", semestre: "Semestre 6", prereq: [] },
+
+  // SEMESTRE 7
+  { nombre: "Gestión de Proyectos Informáticos", semestre: "Semestre 7", prereq: ["Arquitectura de Software"] },
+  { nombre: "Lenguajes de Autómatas", semestre: "Semestre 7", prereq: ["Análisis y Diseño de Algoritmos"] },
+  { nombre: "Sistemas de Información", semestre: "Semestre 7", prereq: ["Aplicaciones Web"] },
+  { nombre: "Administración de Base de Datos", semestre: "Semestre 7", prereq: ["Aplicaciones Web"] },
+  { nombre: "TIPE", semestre: "Semestre 7", prereq: ["Arquitectura de Software"] },
+  { nombre: "Electivo Profesional I", semestre: "Semestre 7", prereq: [] },
+
+  // SEMESTRE 8
+  { nombre: "Pruebas de Sistemas", semestre: "Semestre 8", prereq: ["Gestión de Proyectos Informáticos"] },
+  { nombre: "Lenguajes de Programación", semestre: "Semestre 8", prereq: ["Lenguajes de Autómatas"] },
+  { nombre: "Ciencia de Datos", semestre: "Semestre 8", prereq: ["Administración de Base de Datos"] },
+  { nombre: "Electivo Profesional II", semestre: "Semestre 8", prereq: [] },
+  { nombre: "Electivo Profesional III", semestre: "Semestre 8", prereq: [] },
+  { nombre: "Electivo Profesional IV", semestre: "Semestre 8", prereq: [] },
+
+  // SEMESTRE 9
+  { nombre: "Seminario de Título", semestre: "Semestre 9", prereq: ["TIPE", "Pruebas de Sistemas"] },
+  { nombre: "Práctica Profesional", semestre: "Semestre 9", prereq: ["TIPE", "Pruebas de Sistemas"] }
+];
+
+const contenedor = document.getElementById("malla");
+let aprobados = [];
+
+// Intentar cargar desde localStorage, pero manejar errores
+try {
+  const stored = localStorage.getItem("aprobados_informatica");
+  if (stored) {
+    aprobados = JSON.parse(stored);
+  }
+} catch (e) {
+  console.error("Error al cargar datos:", e);
+  aprobados = [];
+}
+
+function puedeActivarse(ramo) {
+  return ramo.prereq.every(r => aprobados.includes(r));
+}
+
+function actualizarEstadisticas() {
+  const aprobadas = aprobados.length;
+  const disponibles = ramos.filter(r => !aprobados.includes(r.nombre) && puedeActivarse(r)).length;
+  const bloqueadas = ramos.filter(r => !aprobados.includes(r.nombre) && !puedeActivarse(r)).length;
+  const porcentaje = Math.round((aprobadas / ramos.length) * 100);
+
+  document.getElementById("aprobadas").textContent = aprobadas;
+  document.getElementById("disponibles").textContent = disponibles;
+  document.getElementById("bloqueadas").textContent = bloqueadas;
+  document.getElementById("progressBar").style.width = porcentaje + "%";
+  document.getElementById("progressBar").textContent = porcentaje + "%";
+}
+
+function toggleRamo(ramo) {
+  const index = aprobados.indexOf(ramo.nombre);
+  
+  if (index > -1) {
+    // Desmarcar: verificar si otros ramos dependen de este
+    const dependientes = ramos.filter(r => 
+      r.prereq.includes(ramo.nombre) && aprobados.includes(r.nombre)
+    );
+    
+    if (dependientes.length > 0) {
+      const confirmacion = confirm(
+        `⚠️ Al desmarcar "${ramo.nombre}", también se desmarcarán las siguientes asignaturas que dependen de ella:\n\n` +
+        dependientes.map(r => `• ${r.nombre}`).join('\n') +
+        `\n\n¿Deseas continuar?`
+      );
+      
+      if (!confirmacion) return;
+      
+      // Desmarcar esta y todas las dependientes
+      aprobados.splice(index, 1);
+      dependientes.forEach(dep => {
+        const depIndex = aprobados.indexOf(dep.nombre);
+        if (depIndex > -1) {
+          aprobados.splice(depIndex, 1);
+        }
+      });
+    } else {
+      // No hay dependientes, desmarcar directamente
+      aprobados.splice(index, 1);
+    }
+  } else if (puedeActivarse(ramo)) {
+    // Marcar como aprobado
+    aprobados.push(ramo.nombre);
+  }
+  
+  localStorage.setItem("aprobados_informatica", JSON.stringify(aprobados));
+  render();
+}
+
+function resetearTodo() {
+  if (confirm("¿Estás seguro de que quieres reiniciar todo el progreso?")) {
+    aprobados = [];
+    localStorage.setItem("aprobados_informatica", JSON.stringify(aprobados));
+    render();
+  }
+}
+
+function render() {
+  contenedor.innerHTML = "";
+  const semestres = [...new Set(ramos.map(r => r.semestre))];
+
+  semestres.forEach(sem => {
+    const div = document.createElement("div");
+    div.className = "semestre";
+    div.innerHTML = `<h2>${sem}</h2>`;
+
+    ramos.filter(r => r.semestre === sem).forEach(ramo => {
+      const r = document.createElement("div");
+      r.className = "ramo";
+
+      let icon = "🔒";
+      if (aprobados.includes(ramo.nombre)) {
+        r.classList.add("aprobado");
+        icon = "✅";
+      } else if (puedeActivarse(ramo)) {
+        r.classList.add("activo");
+        icon = "💻";
+      } else {
+        r.classList.add("bloqueado");
+      }
+
+      r.innerHTML = `<span class="icon">${icon}</span>${ramo.nombre}`;
+
+      r.onclick = () => toggleRamo(ramo);
+
+      div.appendChild(r);
+    });
+
+    contenedor.appendChild(div);
+  });
+
+  actualizarEstadisticas();
+}
+
+render();
+</script>
+
+</body>
+</html>
